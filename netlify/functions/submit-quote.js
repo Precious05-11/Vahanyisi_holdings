@@ -1,5 +1,4 @@
 exports.handler = async function (event) {
-  // Only allow POST requests
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
@@ -8,30 +7,28 @@ exports.handler = async function (event) {
   }
 
   try {
-    // Get the form data sent from the website
     const data = JSON.parse(event.body);
 
     const { name, phone, email, service, date, budget, location, details } =
       data;
 
-    // HubSpot token stored securely in Netlify
     const HUBSPOT_ACCESS_TOKEN = process.env.HUBSPOT_ACCESS_TOKEN;
 
     if (!HUBSPOT_ACCESS_TOKEN) {
       throw new Error("HubSpot access token is missing");
     }
 
-    // Create a contact in HubSpot
+    const headers = {
+      Authorization: `Bearer ${HUBSPOT_ACCESS_TOKEN}`,
+      "Content-Type": "application/json",
+    };
+
+    // 1. Create the contact
     const contactResponse = await fetch(
       "https://api.hubapi.com/crm/v3/objects/contacts",
       {
         method: "POST",
-
-        headers: {
-          Authorization: `Bearer ${HUBSPOT_ACCESS_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-
+        headers,
         body: JSON.stringify({
           properties: {
             firstname: name,
@@ -52,6 +49,77 @@ exports.handler = async function (event) {
         body: JSON.stringify({
           success: false,
           message: "Unable to create contact",
+          error: contactData,
+        }),
+      };
+    }
+
+    // 2. Create the deal
+    const dealResponse = await fetch(
+      "https://api.hubapi.com/crm/v3/objects/deals",
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          properties: {
+            dealname: `${name} - ${service} Quote Request`,
+            pipeline: "default",
+            dealstage: "appointmentscheduled",
+
+            description: `
+Service: ${service}
+Project/Event Date: ${date || "Not provided"}
+Estimated Budget: ${budget || "Not provided"}
+Location/Venue: ${location || "Not provided"}
+
+Project Details:
+${details || "Not provided"}
+            `.trim(),
+          },
+        }),
+      },
+    );
+
+    const dealData = await dealResponse.json();
+
+    if (!dealResponse.ok) {
+      console.error("HubSpot deal error:", dealData);
+
+      return {
+        statusCode: dealResponse.status,
+        body: JSON.stringify({
+          success: false,
+          message: "Contact created, but deal could not be created",
+          error: dealData,
+        }),
+      };
+    }
+
+    // 3. Associate the deal with the contact
+    const associationResponse = await fetch(
+      `https://api.hubapi.com/crm/v4/objects/deals/${dealData.id}/associations/contacts/${contactData.id}`,
+      {
+        method: "PUT",
+        headers,
+        body: JSON.stringify([
+          {
+            associationCategory: "HUBSPOT_DEFINED",
+            associationTypeId: 3,
+          },
+        ]),
+      },
+    );
+
+    if (!associationResponse.ok) {
+      const associationError = await associationResponse.json();
+      console.error("Association error:", associationError);
+
+      return {
+        statusCode: associationResponse.status,
+        body: JSON.stringify({
+          success: false,
+          message: "Contact and deal created, but association failed",
+          error: associationError,
         }),
       };
     }
@@ -60,8 +128,9 @@ exports.handler = async function (event) {
       statusCode: 200,
       body: JSON.stringify({
         success: true,
-        message: "Quote request received",
+        message: "Quote request successfully added to CRM",
         contactId: contactData.id,
+        dealId: dealData.id,
       }),
     };
   } catch (error) {
