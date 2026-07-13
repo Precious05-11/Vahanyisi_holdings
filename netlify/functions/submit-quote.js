@@ -54,7 +54,7 @@ exports.handler = async function (event) {
       };
     }
 
-    // 2. Create the deal
+    // 2. Create the deal with the custom properties
     const dealResponse = await fetch(
       "https://api.hubapi.com/crm/v3/objects/deals",
       {
@@ -66,15 +66,11 @@ exports.handler = async function (event) {
             pipeline: "default",
             dealstage: "appointmentscheduled",
 
-            description: `
-Service: ${service}
-Project/Event Date: ${date || "Not provided"}
-Estimated Budget: ${budget || "Not provided"}
-Location/Venue: ${location || "Not provided"}
-
-Project Details:
-${details || "Not provided"}
-            `.trim(),
+            service_needed: service,
+            event_project_date: date || null,
+            estimated_budget: budget || "",
+            location__venue: location || "",
+            project_details: details || "",
           },
         }),
       },
@@ -112,6 +108,7 @@ ${details || "Not provided"}
 
     if (!associationResponse.ok) {
       const associationError = await associationResponse.json();
+
       console.error("Association error:", associationError);
 
       return {
