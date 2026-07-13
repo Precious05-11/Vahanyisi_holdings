@@ -9,7 +9,7 @@ form.addEventListener("submit", async function (e) {
 
   try {
     console.log(data);
-    const response = await fetch("/ .netlify/functions/submit-quote", {
+    const response = await fetch("/.netlify/functions/submit-quote", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
