@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request a quote</title>
+   <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="css/request.css">
+
+</head>
+  <body>
+<section class="quote-section">
+
+    <div class="quote-content">
+
+    <div class="quote-text">
+
+        <h5 class="quote-tag">GET A QUOTE</h5>
+
+        <h2>Tell us what you <em>need.</em></h2>
+
+        <p class="quote-intro">
+            Share the brief — event, build or both. Date, location,
+            budget, must-haves. We come back within one business day
+            with a clear, itemised quote.
+        </p>
+
+        <div class="next-container">
+
+            <h3>What happens next?</h3>
+
+            <div class="next-steps">
+
+                <p>
+                   1. Once you submit your request, our team will review your
+                    requirements and contact you within 24–48 hours.
+                </p>
+
+                <p>
+                   2. We may schedule a consultation to discuss your project,
+                    budget and preferred timeline.
+                </p>
+
+                <p>
+                   3. After understanding your needs, we'll provide a customised
+                    quotation tailored to your requirements.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+        <div class="form-container">
+
+            <form id="contactForm">
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="name">YOUR NAME*</label>
+                        <input 
+                        type="text" 
+                        id="name"
+                        name="name"
+                        required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">PHONE / WHATSAPP*</label>
+                        <input
+                         type="tel" 
+                         id="phone"
+                         name="phone"
+                         required>
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+                     <div class="form-group">
+                         <label for="email">EMAIL*</label>
+                          <input
+                           type="email" 
+                           id="email"
+                           name="email"
+                           required>
+                         </div>
+                          <div class="form-group">
+                             <label for="service">Service Needed*</label>
+                              <select
+                               id="service"
+                               name="service" required> 
+                                <option value="" selceted disabled>Select a service</option> 
+                                <option>Decor</option>
+                                 <option>Catering</option>
+                                  <option>Construction</option>
+                                   <option> More than one</option> 
+                                   <option>Not sure yet</option> 
+                                </select>
+                             </div>
+                             </div> 
+                             <div class="form-group">
+                                <label for="event">EVENT / PROJECT DATE</label>
+                                <input 
+                                type="date" 
+                                id="date"
+                                name="date" 
+                                placeholder="yyyy/mm/dd">
+                             </div>
+                             <div class="form-group full-width">
+                                 <label for="budget">Estimated Budget</label>
+                                  <input 
+                                  type="text" 
+                                  id="budget" 
+                                  name="budget"
+                                  placeholder=" e.g.R10,000-R50,000">
+                                 </div> 
+                                 <div class="form-group full-width">
+                                    <label for="location">LOCATION / VENUE</label>
+                                    <input 
+                                    type="text" 
+                                    id="location"
+                                    name="location"
+                                     placeholder="City,suburb or venue">
+                                 </div>
+                                 <div class="form-group full-width">
+                                     <label for="details">Project Details</label>
+                                      <textarea 
+                                      id="details"
+                                      name="details" 
+                                      rows="5"></textarea> 
+                                    </div>
+                                     <button type="submit">Send my request</button>
+                                    </form> 
+                                </div>
+
+            
+        </div>
+
+    </div>
+
+</section>
+
+    <script src="js/request.js"></script>
+       
+</body>
+</html>
