@@ -78,87 +78,71 @@
 }
 
 @media (max-width: 768px) {
+  .quote-section {
+    padding: 50px 16px;
+  }
+
   .quote-content {
     flex-direction: column;
+    gap: 45px;
+    width: 100%;
+  }
+
+  .quote-text {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .quote-text h2 {
+    font-size: 2.2rem;
+    line-height: 1.15;
+  }
+
+  .quote-intro {
+    font-size: 0.95rem;
+  }
+
+  .next-container {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .next-steps p {
+    font-size: 0.9rem;
+    line-height: 1.7;
   }
 
   .form-container {
+    width: 100%;
     max-width: 100%;
+    padding: 25px 18px;
+    margin: 0;
+    box-sizing: border-box;
   }
-}
 
-.form-container h2 {
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.form-row {
-  display: flex;
-  gap: 30px;
-  margin-bottom: 25px;
-}
-
-.form-group {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.full-width {
-  margin-bottom: 25px;
-}
-
-label {
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #333;
-}
-
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 14px 16px;
-  border: 1px solid #ddd;
-  border-radius: 14px;
-  font-size: 15px;
-  outline: none;
-  transition: all 0.3s ease;
-  background: #f8f5fc;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: #c49a3a;
-  box-shadow: 0 0 0 4px rgba(196, 154, 58, 0.15);
-  transform: translateY(-2px);
-}
-
-button {
-  width: 100%;
-  padding: 16px;
-  background: #c49a3a;
-  color: white;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 25px rgba(46, 125, 50, 0.25);
-}
-
-@media (max-width: 768px) {
   .form-row {
     flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
   }
 
-  .form-container {
-    padding: 25px;
+  .form-group {
+    width: 100%;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  button {
+    margin-top: 5px;
   }
 }
